@@ -1,0 +1,6 @@
+numpy>=2.0
+opencv-python==4.13.0.92
+fastapi
+uvicorn
+opencv-contrib-python
+ultralytics
