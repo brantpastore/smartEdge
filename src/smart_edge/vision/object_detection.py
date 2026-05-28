@@ -20,6 +20,7 @@ if __name__ == "__main__":
             results = detector.model.predict(source=frame, classes=[16], imgsz=416, verbose=False)
             dog_count = len(results[0].boxes) if results else 0
             if dog_count > 0:
+                webcam.draw_detections(results[0])
                 print(f"Detected dogs: {dog_count}")
 
 

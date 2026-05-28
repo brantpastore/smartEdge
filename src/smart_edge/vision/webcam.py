@@ -61,6 +61,15 @@ class Webcam:
             raise Exception("Failed to capture frame from webcam")
         
         cv2.imwrite(filename, frame)
+
+    def draw_detections(self, results):
+        for box in results.boxes:
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            confidence = box.conf[0]
+            class_id = int(box.cls[0])
+            label = f"{class_id}: {confidence:.2f}"
+            cv2.rectangle(results.orig_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(results.orig_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     
 
     def release(self):
