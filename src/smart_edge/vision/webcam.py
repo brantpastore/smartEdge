@@ -46,30 +46,30 @@ class Webcam:
         if self.flip_enabled:
             frame = cv2.flip(frame, 1)  # Flip the frame horizontally
 
-        cv2.imshow('Webcam', frame)  # Update the displayed frame
-
+        return frame, False
+    
+    def show_frame(self, frame):
+        cv2.imshow('Webcam', frame)
         # If the user clicks X on the OpenCV window, window visibility becomes < 1.
         is_visible = cv2.getWindowProperty('Webcam', cv2.WND_PROP_VISIBLE)
         if is_visible < 1:
             self.release()
 
-        return frame, False
-    
     def capture_frame(self, filename):
-        ret, frame = self.capture_frame()
+        ret, frame = self.cap.read() # Simplified for direct capture
         if not ret:
             raise Exception("Failed to capture frame from webcam")
         
         cv2.imwrite(filename, frame)
 
-    def draw_detections(self, results):
+    def draw_detections(self, frame, results):
         for box in results.boxes:
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             confidence = box.conf[0]
             class_id = int(box.cls[0])
             label = f"{class_id}: {confidence:.2f}"
-            cv2.rectangle(results.orig_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(results.orig_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     
 
     def release(self):
@@ -83,6 +83,7 @@ if __name__ == "__main__":
     webcam = Webcam()
     try:
         while True:
-            frame = webcam.read_frame()
+            frame, _ = webcam.read_frame()
+            webcam.show_frame(frame)
     except Exception as e:
             print("Failed to read frame from webcam: ", e)
