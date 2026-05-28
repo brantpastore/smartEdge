@@ -1,5 +1,8 @@
 from ultralytics import YOLO
+from src.smart_edge.core.logging import setup_logging
 from src.smart_edge.vision.webcam import Webcam
+from datetime import datetime
+import os
 
 # https://docs.ultralytics.com/guides/yolo26-training-recipe
 # YOLO26m	Higher accuracy with moderate compute	Smaller batches (16-32)
@@ -9,6 +12,10 @@ class ObjectDetection:
         self.model = YOLO(model_path)
 
 if __name__ == "__main__":
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_filename = f"logs/object_detection_{timestamp}.log"
+    logger = setup_logging('src/smart_edge/core/config.json', log_filename)
+    
     webcam = Webcam()
     detector = ObjectDetection()
     try:

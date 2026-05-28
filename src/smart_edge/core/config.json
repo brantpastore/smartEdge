@@ -15,7 +15,7 @@
             "format": "%(levelname)s - %(message)s"
         },
         "json": {
-            "()": "smart_edge.core.JSONFormatter",
+            "()": "src.smart_edge.core.JSONFormatter.JSONFormatter",
             "fmt_keys": {
                 "timestamp": "%(asctime)s",
                 "logger": "%(name)s",
