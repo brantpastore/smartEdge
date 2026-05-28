@@ -1,0 +1,7 @@
+# Local virtual env and editor settings
+.venv/
+.vscode/
+
+# Python cache files
+__pycache__/
+*.pyc

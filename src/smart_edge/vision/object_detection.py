@@ -1,5 +1,5 @@
 from ultralytics import YOLO
-from webcam import Webcam
+from src.smart_edge.vision.webcam import Webcam
 
 # https://docs.ultralytics.com/guides/yolo26-training-recipe
 # YOLO26m	Higher accuracy with moderate compute	Smaller batches (16-32)

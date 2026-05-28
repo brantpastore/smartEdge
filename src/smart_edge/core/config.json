@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "disable_existing_loggers": "False",
+    "filters": {
+        "require_debug_false": {
+            "()": "logging.Filter",
+            "name": "smartEdge"
+        }
+    },
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+        "simple": {
+            "format": "%(levelname)s - %(message)s"
+        },
+        "json": {
+            "()": "smart_edge.core.JSONFormatter",
+            "fmt_keys": {
+                "timestamp": "%(asctime)s",
+                "logger": "%(name)s",
+                "level": "%(levelname)s",
+                "thread": "%(threadName)s",
+                "module": "%(module)s",
+                "function": "%(funcName)s",
+                "line": "%(lineno)d",
+                "message": "%(message)s"
+            }
+        }
+    },
+    "handlers": {
+        "stdout": {
+            "class": "logging.StreamHandler",
+            "formatter": "json",
+            "stream": "ext://sys.stdout"
+        },
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "logs/smartEdge.log",
+            "maxBytes": 10485760,
+            "backupCount": 5
+        }
+    },
+    "loggers": {
+        "smartEdge": {
+            "handlers": ["stdout", "file"],
+            "level": "DEBUG",
+            "propagate": "False"
+        }
+    }
+}
