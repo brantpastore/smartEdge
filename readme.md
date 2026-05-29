@@ -16,7 +16,8 @@ Build a containerized Python application that simulates running on an IoT Edge d
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python Webcam/webcam.py
+export PYTHONPATH=$PYTHONPATH:$PWD/src
+python src/smart_edge/vision/object_detection.py
 ```
 
 ## Controls
