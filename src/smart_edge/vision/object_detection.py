@@ -24,6 +24,9 @@ if __name__ == "__main__":
     log_filename = f"logs/object_detection_{timestamp}.log"
     logger = setup_logging('src/smart_edge/core/config.json', log_filename, level=log_level)
     
+    logger.info(f"Starting object detection with level: {log_level}")
+    logger.debug("Debug logging is enabled")
+    
     webcam = Webcam()
     detector = ObjectDetection(model_path=args.model)
     try:

@@ -17,14 +17,14 @@
         "json": {
             "()": "src.smart_edge.core.JSONFormatter.JSONFormatter",
             "fmt_keys": {
-                "timestamp": "%(asctime)s",
-                "logger": "%(name)s",
-                "level": "%(levelname)s",
-                "thread": "%(threadName)s",
-                "module": "%(module)s",
-                "function": "%(funcName)s",
-                "line": "%(lineno)d",
-                "message": "%(message)s"
+                "timestamp": "timestamp",
+                "logger": "name",
+                "level": "levelname",
+                "thread": "threadName",
+                "module": "module",
+                "function": "funcName",
+                "line": "lineno",
+                "message": "message"
             }
         }
     },

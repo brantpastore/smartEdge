@@ -1,4 +1,5 @@
-import cv2, time
+import cv2, time, logging
+from src.smart_edge.core.logging import logger
 
 class Webcam:
     flip_enabled = False
@@ -39,6 +40,8 @@ class Webcam:
             self.capture_frame = False
             cv2.imwrite(f'{int(time.time())}_captured_frame.jpg', frame)
             print("Frame captured and saved as 'captured_frame.jpg'")
+            logger.info("Captured frame saved as 'captured_frame.jpg'")
+            logger.debug("Captured frame saved as 'captured_frame.jpg'")
 
         if self.blur_enabled:
             frame = cv2.blur(frame, (15, 15), 0)
@@ -58,6 +61,7 @@ class Webcam:
     def capture_frame(self, filename):
         ret, frame = self.cap.read() # Simplified for direct capture
         if not ret:
+            logger.error("Failed to capture frame from webcam")
             raise Exception("Failed to capture frame from webcam")
         
         cv2.imwrite(filename, frame)
@@ -70,6 +74,7 @@ class Webcam:
             label = f"{class_id}: {confidence:.2f}"
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            logger.debug(f"Detection: {label} at [{x1}, {y1}, {x2}, {y2}]")
     
 
     def release(self):
