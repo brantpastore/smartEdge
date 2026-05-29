@@ -1,6 +1,6 @@
 from ultralytics import YOLO
-from src.smart_edge.core.logging import setup_logging
-from src.smart_edge.vision.webcam import Webcam
+from smart_edge.core.logging import setup_logging
+from smart_edge.vision.webcam import Webcam
 from datetime import datetime
 import os
 import argparse
