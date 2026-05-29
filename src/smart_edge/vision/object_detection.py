@@ -3,6 +3,7 @@ from src.smart_edge.core.logging import setup_logging
 from src.smart_edge.vision.webcam import Webcam
 from datetime import datetime
 import os
+import argparse
 
 # https://docs.ultralytics.com/guides/yolo26-training-recipe
 # YOLO26m	Higher accuracy with moderate compute	Smaller batches (16-32)
@@ -12,12 +13,19 @@ class ObjectDetection:
         self.model = YOLO(model_path)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="SmartEdge Object Detection")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
+    parser.add_argument("--model", type=str, default="yolo26m.pt", help="Path to YOLO model")
+    args = parser.parse_args()
+
+    log_level = "DEBUG" if args.debug else "INFO"
+    
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     log_filename = f"logs/object_detection_{timestamp}.log"
-    logger = setup_logging('src/smart_edge/core/config.json', log_filename)
+    logger = setup_logging('src/smart_edge/core/config.json', log_filename, level=log_level)
     
     webcam = Webcam()
-    detector = ObjectDetection()
+    detector = ObjectDetection(model_path=args.model)
     try:
         while True:
             frame, _ = webcam.read_frame()

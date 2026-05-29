@@ -6,7 +6,7 @@ import os
 
 logger = logging.getLogger("smartEdge")
 
-def setup_logging(config_path, log_path=None):
+def setup_logging(config_path, log_path=None, level=None):
     with open(config_path, 'r') as config_file:
         config_dict = json.load(config_file)
 
@@ -19,6 +19,15 @@ def setup_logging(config_path, log_path=None):
         for handler in config_dict.get("handlers", {}).values():
             if "filename" in handler:
                 handler["filename"] = log_path
+
+    if level:
+        # Override the level in the main logger
+        if "loggers" in config_dict and "smartEdge" in config_dict["loggers"]:
+            config_dict["loggers"]["smartEdge"]["level"] = level
+        # Also override root or specific handlers if needed
+        for handler in config_dict.get("handlers", {}).values():
+            if "level" in handler:
+                handler["level"] = level
 
     logging.config.dictConfig(config_dict)
     return logger
