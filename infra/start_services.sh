@@ -16,10 +16,11 @@ cleanup() {
 
 trap cleanup SIGINT SIGTERM EXIT
 
-(cd /app/fastapi && python -m uvicorn api:app --host 0.0.0.0 --port 8000) &
+export PYTHONPATH=$PYTHONPATH:/app/src
+(cd /app/src/smart_edge/api && python -m uvicorn api:app --host 0.0.0.0 --port 8000) &
 FASTAPI_PID=$!
 
-python /app/Webcam/object_detection.py &
+python /app/src/smart_edge/vision/object_detection.py &
 DETECT_PID=$!
 
 wait -n "${FASTAPI_PID}" "${DETECT_PID}"
